@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Recommender System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link href='https://fonts.googleapis.com/css?family=Allan' rel='stylesheet'>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+body {
+    background: url(3.jpg);
+}
+
+span:hover{
+  @include transition(.25s ease-in-out);
+  @include boxShadow(inset 0px 0 0 0 #ff401a);
+  color:black;
+  overflow:hidden;
+  &:hover {
+    color:white;
+    @include boxShadow(inset 500px 0 0 0 #ff401a);
+  }
+
+
+}
+img{
+  border-radius: 8px;
+}
+     img:hover{
+
+
+      box-shadow:
+                1px 1px #95967c,
+                2px 2px #95967c,
+                3px 3px #95967c;
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+
+
+     }
+     .rating:hover{
+
+      -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+     }
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+
+  /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+
+  .rating {
+    float:left;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+/*        Causing the problem where other stars also get selected 
+.rating > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+*/
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2;
+}
+  </style>
+</head>
+<body>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" >
+      
+      
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid">    
+  <div class="row content">
+    <div class="col-sm-1" >
+     
+    </div>
+    <div class="col-sm-10 col-lg-10 text-left"> 
+       <div class="col-lg-8 col-md-8 col-sm-6 col-xs-1">&nbsp;</div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-11">
+           
+           <input type="text" class="form-control" style="height:26px;width:70%;float:left;">
+             <a href="#"><img src="search.png" style="margin-left:-4px;height:28px;width:30px;box-shadow:none;"> </a>
+         </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          
+           
+             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:100px;text-align:center;">
+
+                <!-- Logo or Name of the system -->  
+                  <h2 style="font-size:30px;font-family: 'Allan';"> Pick a movie that suits your interest</h2>
+                  <h2 style="font-size:18px;font-family: 'Allan';margin-top:-16px;"> Click on the poster to skip a movie</h2>
+
+              </div>
+  <!-- -->         
+          <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+            <a href="#"><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+                <fieldset class="rating">
+                   
+                    <input type="radio" id="m1star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                    <input type="radio" id="m1star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                    <input type="radio" id="m1star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                    <input type="radio" id="m1star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                    <input type="radio" id="m1star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+                </fieldset>
+
+
+
+
+
+                  </div>
+
+              </div>
+           </div>
+           <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+           <a href="#"> <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+            <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+<fieldset class="rating">
+   
+    <input type="radio" id="m2star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="m2star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="m2star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="m2star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="m2star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+
+
+
+
+                      
+                  </div>
+
+              </div>
+          </div>
+          <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10"> 
+               <a href="#"> <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQyODg5Njc4N15BMl5BanBnXkFtZTgwMzExMjE3NzE@._V1_SX300.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+<fieldset class="rating">
+   
+    <input type="radio" id="m3star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="m3star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="m3star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="m3star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="m3star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+
+
+
+
+                      
+                  </div>
+
+              </div>
+
+            
+          </div>
+
+          <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+              <a href="#"> <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxMjYyNzgwMl5BMl5BanBnXkFtZTgwMTE3MjYyMTE@._V1_SX300.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+
+               <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+<fieldset class="rating">
+   
+    <input type="radio" id="m4star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="m4star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="m4star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="m4star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="m4star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+
+
+
+
+                      
+                  </div>
+
+              </div>
+
+          </div>
+
+          <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+             <a href="#"> <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTU5MzU2MzY2Nl5BMl5BanBnXkFtZTgwOTM4NzMxMDE@._V1_SX300.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+
+               <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+<fieldset class="rating">
+   
+    <input type="radio" id="m5star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="m5star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="m5star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="m5star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="m5star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+
+
+
+
+                      
+                  </div>
+
+              </div>
+
+          </div>
+          <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div> 
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+              <a href="#"> <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg" style="height:230px;width:150px;" class="imgtag"> </a>
+
+               <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      
+
+<fieldset class="rating">
+   
+    <input type="radio" id="m6star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="m6star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="m6star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="m6star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="m6star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+
+
+
+
+                      
+                  </div>
+
+              </div>
+          </div>
+        </div>
+    </div>
+
+   
+  </div>
+</div>
+
+<footer class="container-fluid text-center" style="opacity:0.4;">
+  <input type="submit" class="btn-success" style="opacity:1;"> 
+</footer>
+<script>
+var myjson=[
+   {
+      "Name":"Zootopia",
+      "movieId":152081,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg.jpg"
+   },
+   {
+      "Name":"Up",
+      "movieId":68954,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg"
+   },
+   
+   {
+      "Name":"Deadpool",
+      "movieId":122904,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjQyODg5Njc4N15BMl5BanBnXkFtZTgwMzExMjE3NzE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Fifty Shades of Grey",
+      "movieId":125916,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjE1MTM4NDAzOF5BMl5BanBnXkFtZTgwNTMwNjI0MzE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The 40-Year-Old Virgin",
+      "movieId":35836,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTU5MzU2MzY2Nl5BMl5BanBnXkFtZTgwOTM4NzMxMDE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The Lord of the Rings: The Fellowship of the Ring",
+      "movieId":4993,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Ghostbusters",
+      "movieId":2716,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxMjYyNzgwMl5BMl5BanBnXkFtZTgwMTE3MjYyMTE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The Princess Bride",
+      "movieId":1197,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMGM4M2Q5N2MtNThkZS00NTc1LTk1NTItNWEyZjJjNDRmNDk5XkEyXkFqcGdeQXVyMjA0MDQ0Mjc@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Raiders of the Lost Ark",
+      "movieId":1198,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjA0ODEzMTc1Nl5BMl5BanBnXkFtZTcwODM2MjAxNA@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Mad Max: Fury Road",
+      "movieId":122882,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTUyMTE0ODcxNF5BMl5BanBnXkFtZTgwODE4NDQzNTE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Inside Out",
+      "movieId":134853,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Snow White and the Seven Dwarfs",
+      "movieId":594,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTQwMzE2Mzc4M15BMl5BanBnXkFtZTcwMTE4NTc1Nw@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Toy Story",
+      "movieId":1,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The LEGO Movie",
+      "movieId":108932,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzIyNjg3MDE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The Wizard of Oz",
+      "movieId":919,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BNjUyMTc4MDExMV5BMl5BanBnXkFtZTgwNDg0NDIwMjE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Psycho",
+      "movieId":1219,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BOWQ0MjRmZmUtY2Q2Yi00ODcxLWE4NGMtMTNjMDY1YmUzMjVkXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Seven Samurai",
+      "movieId":2019,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTc5MDY1MjU5MF5BMl5BanBnXkFtZTgwNDM2OTE4MzE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Monty Python and the Holy Grail",
+      "movieId":1136,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BNmNmZjViNTQtNDQ5Mi00MDYzLWI5YWMtNDUyZGNmMGZhNDg4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
+   },
+   {
+      "Name":"True Grit",
+      "movieId":82459,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjIxNjAzODQ0N15BMl5BanBnXkFtZTcwODY2MjMyNA@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Django Unchained",
+      "movieId":99114,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The Godfather",
+      "movieId":858,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BZTRmNjQ1ZDYtNDgzMy00OGE0LWE4N2YtNTkzNWQ5ZDhlNGJmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Airplane",
+      "movieId":2791,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BZDU5MjY1NzItMThjOC00ZTBmLWJmOTMtMTUxNGY3YTM5NGQyXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Amadeus",
+      "movieId":1225,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTg5NDkwMTk5N15BMl5BanBnXkFtZTYwODg3MDk2._V1_SX300.jpg"
+   },
+   {
+      "Name":"Monsters, Inc.",
+      "movieId":4886,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTY1NTI0ODUyOF5BMl5BanBnXkFtZTgwNTEyNjQ0MDE@._V1_SX300.jpg"
+   },
+   {
+      "Name":"The Dark Knight",
+      "movieId":58559,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Fight Club",
+      "movieId":2959,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BZGY5Y2RjMmItNDg5Yy00NjUwLThjMTEtNDc2OGUzNTBiYmM1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Inception",
+      "movieId":79132,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
+   },
+   {
+      "Name":"Saving Private Ryan",
+      "movieId":2028,
+      "rating":"",
+      "URL":"https://images-na.ssl-images-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"
+   }
+]
+
+var lengthofmyjson=myjson.length;
+function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].URL === nameKey) {
+            return myArray[i];
+        }
+    }
+}
+/*
+function searchifhasrating(myArray){
+    var returnthisarray;
+    for (var i=0; i < myArray.length; i++) {
+        if (!(myArray[i].rating ==="")) {
+            returnthisarray.push(myArray[i]);
+        }
+
+    }
+    return returnthisarray;
+}
+*/
+var ratedproduct;
+var jsonindex=7;
+var howmanyrated=0;
+$(document).ready(function(){
+
+  
+    $("label").click(function(){ 
+           howmanyrated++;
+      //variables that are storing the actual poster and the name fetched from the json
+ var temp=myjson[jsonindex].URL;
+ var MovieName=myjson[jsonindex].Name;
+// gets the user input to be entered into the json
+var userinput=jQuery(this).prev().attr("value");
+//var resultObject = search(targeturl, myjson);
+ //fades the actual posters which are img tags.
+  $(this).parents().eq(3).children().eq(0).children().eq(0).fadeOut(400, function() {
+              var targeturl=$(this).attr("src");
+            
+            var resultObject = search(targeturl, myjson);
+            
+               resultObject.rating=userinput;
+              $(this).attr("src", temp);
+              $(this).attr("title",MovieName);
+              
+        })
+        .fadeIn(400);
+        //fades the stars too
+  $(this).parents().eq(0).fadeOut(180, function() {
+             
+        })
+        .fadeIn(120);
+
+
+
+// increments the count by 1
+      
+      jsonindex++;
+
+
+       
+    });
+$(".imgtag").click(function(){
+  $(this).fadeOut(120, function() {
+             var temp=myjson[jsonindex].URL;
+            var MovieName=myjson[jsonindex].Name;
+              $(this).attr("src", temp);
+              $(this).attr("title",MovieName);
+        })
+        .fadeIn(120);
+        jsonindex++;
+  });
+
+
+});
+ 
+
+
+</script>
+</body>
+</html>
+<!--
+  <fieldset>
+    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Waste of time">1 star</label>
+</fieldset>
+-->

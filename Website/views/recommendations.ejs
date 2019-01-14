@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <title>Recommender System</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <meta name="google-signin-client_id" content="<<GOOGLE API ADDRESS>>.apps.googleusercontent.com">
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+                <link href='https://fonts.googleapis.com/css?family=Allan' rel='stylesheet'>
+                <link href="style/loading.css" rel="stylesheet" type="text/css">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="script/recommendations/recommendations.js"></script>
+                <script type="text/javascript" src="script/session.js"></script>
+        </head>
+        <body>
+                <script>
+                window.fbAsyncInit = function() {
+                        FB.init({
+                                appId      : '<<FACEBOOK APP ID>>',
+                                cookie     : true,
+                                xfbml      : true,
+                                version    : 'v2.8'
+                        });
+                        //FB.AppEvents.logPageView();
+
+                        FB.getLoginStatus(function (response) {
+                                console.log('Facebook:', 'Checking session.');
+
+                                checkFacebookSession(response);
+                        });
+                };
+
+                (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) { return; }
+                        js = d.createElement(s); js.id = id;
+                        js.src = '//connect.facebook.net/en_US/sdk.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                } (document, 'script', 'facebook-jssdk'));
+                </script>
+
+                <div id="nav-bar" class="nav-bar">
+                        <% if (locals.fn) { %><span>Hello, <%= fn %>!&nbsp; &nbsp; | &nbsp; &nbsp;</span><% } %>
+                        <a href="/rate" id="back-button">Rate Page</a>
+                        <span>&nbsp; &nbsp; | &nbsp; &nbsp;</span>
+                        <a href="#" id="endSession" disabled="true">Logout</a>
+                </div>
+                <div id="loading" class="loading">
+                        <img src="images/gear.svg" class="img-loading" height="256px" width="256px">
+                        <br>
+                        <span class="text-loading">Working... Please do not refresh the page.<span>
+                </div>
+                <div class="rec-title" style="width:100%;height:120px;text-align:center;margin-top:50px;"> <h1> Here are the movies that we recommend! </h1> </div>
+
+                <script src="https://apis.google.com/js/platform.js?onload=checkGoogleSession" async defer></script>
+        </body>
+</html>

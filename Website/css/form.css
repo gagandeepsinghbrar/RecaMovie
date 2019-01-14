@@ -1,0 +1,73 @@
+form.login-form, form.register-form {
+        font-family: Roboto,arial,sans-serif;
+        margin-bottom: 5px;
+}
+form input {
+        display: block;
+        margin-top: 5px;
+        width: 240px;
+        height: 36px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1.21px;
+        outline: none;
+        background-color: #eeeeee;
+}
+form span {
+        color: rgba(255, 45, 45, .8);
+        font-size: 12px;
+}
+input.text-input {
+        border-style: solid;
+        border-width: 0px 0px 1px 0px;
+        border-color: #e2e2e2;
+        transition: border-color 0.218s, border-width 0.218s;
+}
+input.text-input:hover {
+        border-color: rgba(66,133,244,.8);
+        border-width: 0px 0px 2px 0px;
+}
+input.text-input:focus {
+        border-color: rgba(25, 193, 25, .8);
+        border-width: 0px 0px 2px 0px;
+}
+input#confirm {
+        margin-bottom: 10px;
+}
+
+#submit, #register, #register-redirect {
+        font-size: 14px;
+        letter-spacing: 1.21px;
+}
+
+div#agreement {
+        width: 240px;
+        height: auto;
+}
+div#agreement p {
+        font-size: 12px;
+}
+
+.input-button {
+        background-color: #ffffff;
+        color: #757575;
+        border-style: none;
+        border-radius: 1px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+        text-align: center;
+        vertical-align: middle;
+        width: 240px;
+        height: 36px;
+        transition: background-color 0.218s, box-shadow 0.218s, border-color 0.218s;
+        user-select: none;
+        white-space: nowrap;
+        outline: none;
+}
+.input-button:hover {
+        cursor: pointer;
+        box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
+}
+.input-button:active {
+        background-color: #eeeeee;
+        color: #6d6d6d;
+}

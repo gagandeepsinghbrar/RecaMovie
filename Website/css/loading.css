@@ -1,0 +1,66 @@
+body {
+        background: url("/images/ratebg.jpg");
+}
+div#nav-bar {
+        top: 0;
+        position: fixed;
+        width: 100%;
+        height: 30px;
+        text-align: right;
+        padding-right: 40px;
+        padding-top: 3px;
+        background-color: rgba(25, 193, 25, .1);
+        letter-spacing: 1px;
+        outline: none;
+        font-family: Roboto,arial,sans-serif;
+        user-select: none;
+}
+div#nav-bar span, div#nav-bar a {
+        vertical-align: middle;
+}
+div#nav-bar a {
+        pointer-events: none;
+}
+
+.rec img {
+        border-radius: 8px;
+}
+
+.rec img:hover {
+        box-shadow:
+        1px 1px #95967c,
+        2px 2px #95967c,
+        3px 3px #95967c;
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+}
+
+.rec-title h1, .rec span {
+        font-family: 'Allan';
+}
+
+.rec-title {
+        display: none;
+}
+
+div.loading {
+        position: fixed;
+        margin: 100px auto;
+        width: 100%;
+        height: auto%;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+}
+
+div.text-loading {
+        font-family: Roboto,arial,sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.8px;
+        user-select: none;
+}
+
+div.img-loading {
+        user-select: none;
+}

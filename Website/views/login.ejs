@@ -1,0 +1,83 @@
+<html>
+        <head>
+                <title>Reca Movie - Login</title>
+
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <meta name="google-signin-client_id" content="<<GOOGLE API ADDRESS>>.apps.googleusercontent.com">
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+                <link href="style/apis.css" rel="stylesheet" type="text/css">
+                <link href="style/form.css" rel="stylesheet" type="text/css">
+                <link href="style/container-layout.css" rel="stylesheet" type="text/css">
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script type="text/javascript" src="script/login/login.js"></script>
+                <script type="text/javascript" src="script/login/validLogin.js"></script>
+        </head>
+
+        <body>
+                <script>
+                window.fbAsyncInit = function() {
+                        FB.init({
+                                appId      : '<<FACEBOOK APP ID>>',
+                                cookie     : true,
+                                xfbml      : true,
+                                version    : 'v2.8'
+                        });
+                        //FB.AppEvents.logPageView();
+
+                        FB.getLoginStatus(function (response) {
+                                console.log('Facebook:', 'Checking session.');
+
+                                checkFacebookSession(response);
+                        });
+                };
+
+                (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) { return; }
+                        js = d.createElement(s); js.id = id;
+                        js.src = '//connect.facebook.net/en_US/sdk.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                } (document, 'script', 'facebook-jssdk'));
+                </script>
+                <div class="jumbotron">
+                        <div class="container" style="margin-top:10px;">
+                                <h3> Login </h3>
+                                <div class="box" style="margin-bottom:80px;">
+                                        <form action="/" class="login-form" method="post">
+                                                <% if (locals.errs) { %>
+                                                        <% for (var val in errs) { %>
+                                                                <span>*<%= errs[val].msg %></span><br>
+                                                        <% } %>
+                                                <% } %>
+                                                <% if (locals.msg) { %><span><%= msg %></span><% } %>
+                                                <input type="text" id="email" class="text-input" placeholder="Email" name="email">
+                                                <input type="password" id="password" class="text-input" placeholder="Password" name="password">
+                                                <input type="submit" id="submit" class="input-button" value="Login">
+                                        </form>
+                                        <div id="agreement" class="agreement">
+                                                <p>By registering you indicate that you have read and agree to the <a href="/terms-of-service">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+                                                <input type="button" id="register" class="input-button" value="Register">
+                                        </div>
+                                        <br>
+                                        <div id="g-login" class="input-button">
+                                                <div id="g-logo-container" class="logo-container">
+                                                        <div id="g-logo" class="logo"></div>
+                                                </div>
+                                                <span id="g-login-text" class="login-text">Continue with Google</span>
+                                        </div>
+                                        <br>
+                                        <div id="f-login" class="input-button">
+                                                <div id="f-logo-container" class="logo-container">
+                                                        <div id="f-logo" class="logo"></div>
+                                                </div>
+                                                <span id="f-login-text" class="login-text">Continue with Facebook</span>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+                <script src="https://apis.google.com/js/platform.js?onload=checkGoogleSession" async defer></script>
+        </body>
+</html>

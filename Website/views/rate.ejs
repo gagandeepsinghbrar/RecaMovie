@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <title>Recommender System</title>
+
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <meta name="google-signin-client_id" content="<<GOOGLE API ADDRESS>>.apps.googleusercontent.com">
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+                <link href='https://fonts.googleapis.com/css?family=Allan' rel='stylesheet'>
+                <link href="style/rate.css" rel="stylesheet" type="text/css">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="script/rate/rate.js"></script>
+                <script type="text/javascript" src="script/session.js"></script>
+        </head>
+        <body>
+                <script>
+                window.fbAsyncInit = function() {
+                        FB.init({
+                                appId      : '<<FACEBOOK APP ID>>',
+                                cookie     : true,
+                                xfbml      : true,
+                                version    : 'v2.8'
+                        });
+                        //FB.AppEvents.logPageView();
+
+                        FB.getLoginStatus(function (response) {
+                                console.log('Facebook:', 'Checking session.');
+
+                                checkFacebookSession(response);
+                        });
+                };
+
+                (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) { return; }
+                        js = d.createElement(s); js.id = id;
+                        js.src = '//connect.facebook.net/en_US/sdk.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                } (document, 'script', 'facebook-jssdk'));
+                </script>
+
+                <div id="nav-bar" class="nav-bar">
+                        <% if (locals.fn) { %><span>Hello, <%= fn %>!&nbsp; &nbsp; | &nbsp; &nbsp;</span><% } %>
+                        <a href="#" id="endSession">Logout</a>
+                </div>
+                <% if (locals.msg) { %><span><%= msg %></span><% } %>
+
+                <div class="container-fluid">
+                        <div class="row content">
+                                <div class="col-sm-1" >
+
+                                </div>
+                                <div class="col-sm-10 col-lg-10 text-left">
+                                        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-1">&nbsp;</div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:100px;text-align:center;">
+
+                                                        <!-- Logo or Name of the system -->
+                                                        <h2 style="font-size:30px;font-family: 'Allan';"> Rate a movie that suits your interest</h2>
+                                                        <h2 style="font-size:18px;font-family: 'Allan';margin-top:-16px;"> Click on the poster to skip a movie</h2>
+
+                                                </div>
+                                                <!-- -->
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"><img src="movie1.jpg" style="height:230px;width:150px;"> </a>
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m1star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m1star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m1star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m1star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m1star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+                                                </div>
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"> <img src="movie6.jpg" style="height:230px;width:150px;"> </a>
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m2star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m2star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m2star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m2star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m2star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+                                                </div>
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"> <img src="movie2.jpg" style="height:230px;width:150px;"> </a>
+
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m3star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m3star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m3star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m3star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m3star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+
+
+                                                </div>
+
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"> <img src="movie3.jpg" style="height:230px;width:150px;"> </a>
+
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m4star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m4star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m4star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m4star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m4star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+
+                                                </div>
+
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"> <img src="movie4.jpg" style="height:230px;width:150px;"> </a>
+
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m5star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m5star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m5star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m5star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m5star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+
+                                                </div>
+                                                <div class="col-xs-2 hidden-md hidden-lg hidden-sm"></div>
+                                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-10">
+                                                        <a href="#"> <img src="movie5.jpg" style="height:230px;width:150px;"> </a>
+
+                                                        <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                                        <fieldset class="rating">
+
+                                                                                <label for="star5" title="Rocks!">5 stars</label><input type="radio" id="m6star5" name="rating" value="5">
+                                                                                <label for="star4" title="Pretty good">4 stars</label><input type="radio" id="m6star4" name="rating" value="4">
+                                                                                <label for="star3" title="Meh">3 stars</label><input type="radio" id="m6star3" name="rating" value="3">
+                                                                                <label for="star2" title="Kinda bad">2 stars</label><input type="radio" id="m6star2" name="rating" value="2">
+                                                                                <label for="star1" title="Waste of time">1 star</label><input type="radio" id="m6star1" name="rating" value="1">
+                                                                        </fieldset>
+
+
+
+
+
+                                                                </div>
+
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
+
+                        </div>
+                </div>
+
+                <footer class="container-fluid text-center" style="opacity:0.4;">
+                        <input type="submit" class="btn-success" style="opacity:1;">
+                </footer>
+
+                <script src="https://apis.google.com/js/platform.js?onload=checkGoogleSession" async defer></script>
+        </body>
+</html>
